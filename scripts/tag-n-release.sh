@@ -107,8 +107,8 @@ for file in $version_files; do
 
 
     if [ "$main_branch_version" != "$current_version" ]; then
-        # git checkout -d intermediate-branch
-        # git checkout -b intermediate-branch
+        git checkout -d intermediate-branch
+        git checkout -b intermediate-branch
         # tag_name="$current_version"
         # git tag "$tag_name" && git push origin "$tag_name"
         FOLDER_TO_KEEP="./$fp"
@@ -123,7 +123,7 @@ for file in $version_files; do
             fi
         done
         echo "./$fp"
-        echo "Folder path: $folder_path"
+        # echo "Folder path: $folder_path"
 
         echo "Publishing module: $folder_name from $main_branch_version to $current_version"
 
