@@ -48,55 +48,25 @@ resource "aws_db_parameter_group" "this" {
 }
 
 resource "aws_db_instance" "this" {
-  identifier = local.identifier
+  allocated_storage           = 50
+  auto_minor_version_upgrade  = false                         # Custom for Oracle does not support minor version upgrades
+  custom_iam_instance_profile = "AWSRDSCustomInstanceProfile" # Instance profile is required for Custom for Oracle. See: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/custom-setup-orcl.html#custom-setup-orcl.iam-vpc
+  backup_retention_period     = 7
+  db_subnet_group_name        = local.db_subnet_group_name
+  engine                      = data.aws_rds_orderable_db_instance.custom-oracle.engine
+  engine_version              = data.aws_rds_orderable_db_instance.custom-oracle.engine_version
+  identifier                  = "ee-instance-demo"
+  instance_class              = data.aws_rds_orderable_db_instance.custom-oracle.instance_class
+  kms_key_id                  = data.aws_kms_key.by_id.arn
+  license_model               = data.aws_rds_orderable_db_instance.custom-oracle.license_model
+  multi_az                    = false # Custom for Oracle does not support multi-az
+  password                    = "avoid-plaintext-passwords"
+  username                    = "test"
+  storage_encrypted           = true
 
-  engine                = var.engine
-  engine_version        = var.engine_version
-  instance_class        = var.instance_class
-  allocated_storage     = var.allocated_storage
-  max_allocated_storage = var.max_allocated_storage
-  storage_type          = var.storage_type
-  iops                  = var.storage_type == "io1" ? var.iops : null
-  storage_encrypted     = true
-
-  username = var.username
-  password = var.password
-  port     = var.port
-  db_name  = var.name
-
-  iam_database_authentication_enabled = true
-
-  snapshot_identifier = var.snapshot_identifier
-
-  vpc_security_group_ids = var.vpc_security_group_ids
-  db_subnet_group_name   = var.db_subnet_group_name
-  parameter_group_name   = aws_db_parameter_group.this.name
-  option_group_name      = var.option_group_name
-
-  availability_zone = var.availability_zone
-  multi_az          = local.is_prod ? true : var.multi_az
-
-  publicly_accessible = false
-  monitoring_interval = 60
-  monitoring_role_arn = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/rds-monitoring-role"
-
-  allow_major_version_upgrade = var.allow_major_version_upgrade != null ? var.allow_major_version_upgrade : (local.is_prod ? false : true)
-  auto_minor_version_upgrade  = var.auto_minor_version_upgrade
-  maintenance_window          = var.maintenance_window
-
-  # production can be specified by caller (default is 30 days), non-prod is fixed to 5 days
-  backup_retention_period = local.is_prod ? var.backup_retention_period : 5
-  backup_window           = var.backup_window
-
-  apply_immediately        = var.apply_immediately
-  deletion_protection      = local.is_prod ? true : var.deletion_protection
-  delete_automated_backups = var.delete_automated_backups
-  skip_final_snapshot      = var.skip_final_snapshot
-
-  performance_insights_enabled          = local.insights_enabled
-  performance_insights_kms_key_id       = local.insights_enabled ? data.aws_kms_key.aws_rds.arn : null
-  performance_insights_retention_period = local.insights_enabled ? var.performance_insights_retention_period : null
-  enabled_cloudwatch_logs_exports       = var.enabled_cloudwatch_logs_exports
-
-  tags = local.tags
+  timeouts {
+    create = "3h"
+    delete = "3h"
+    update = "3h"
+  }
 }
