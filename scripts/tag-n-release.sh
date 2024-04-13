@@ -89,7 +89,7 @@ for file in $version_files; do
     declare main_branch_version
 
     file="${file#./}"
-    # echo $file
+    echo $file
 
     # rds=$(awk '/^rds:/ {print $2}' "$file" | tr -d '"')
     # provisioned=$(awk '/^provisioned:/ {print $2}' "$file" | tr -d '"')
@@ -102,7 +102,7 @@ for file in $version_files; do
     current_version=$(echo "$current_branch_content" | awk '/^version:/ {print $2}' | tr -d '"')
     # main_branch_version=$(get_main_branch_version "$file" | awk '/^version:/ {print $2}' | tr -d '"')
 
-    main_branch_version=$(git show HEAD^:"$file")
+    main_branch_version=$(git show HEAD^:"$file"| awk '/^version:/ {print $2}' | tr -d '"')
 
     # echo $current_version
     # echo $main_branch_version
