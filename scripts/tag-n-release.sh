@@ -134,9 +134,8 @@ for file in $version_files; do
 
         echo "Publishing module: $NEW_PATH from $main_branch_version to $current_version. Tag: $tag_name"
         git --version
-        git config user.name "Prabesh Thapa"
-        git config user.email "sthapaprabesh2020@gmail.com"
-        git remote set-url origin git@github.com:pgaijin66/terraform-versioned.git
+        git config user.name "GitHub Actions"
+        git config user.email "github-actions@users.noreply.github.com"
         git add . 
         git commit -m "Publishing module: $NEW_PATH from $main_branch_version to $current_version. Tag: $tag_name" >/dev/null 2>&1
         git tag "$tag_name" 
