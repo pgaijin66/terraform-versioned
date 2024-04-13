@@ -38,8 +38,8 @@ if [ "$main_version" != "$current_version" ]; then
         if [ "$folder_name" != "$folder_to_keep" ]; then
             tag_name="$current_version"
             git checkout -b intermediate-branch
-            git add .
             rm -rf "$folder"
+            git add .
             git commit -m "Publishing module: $folder_name"
             git tag "$tag_name" && git push origin "$tag_name"
             git checkout -
