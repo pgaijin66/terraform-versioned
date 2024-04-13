@@ -136,7 +136,7 @@ for file in $version_files; do
         git --version
         git config user.name "Prabesh Thapa"
         git config user.email "sthapaprabesh2020@gmail.com"
-        git remote set-url --push origin https://pgaijin66:$GITHUB_TOKEN@https://github.com/pgaijin66/terraform-versioned
+        git remote set-url origin https://github.com/pgaijin66/terraform-versioned.git
         git add . 
         git commit -m "Publishing module: $NEW_PATH from $main_branch_version to $current_version. Tag: $tag_name" >/dev/null 2>&1
         git tag "$tag_name" && git push origin "$tag_name"
