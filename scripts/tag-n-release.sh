@@ -53,7 +53,7 @@ START_DIR="."
 
 # Find all version.yaml files
 version_files=$(find "$START_DIR" -type f -name "version.yaml")
-folders=$(find "$START_DIR" -mindepth 1 -maxdepth 3 -type d)
+folders=$(find "$START_DIR" -mindepth 1 -maxdepth 3 -type d ! -path ./.git)
 
 # # Define the URL of the version.yaml file in the main branch
 
@@ -112,7 +112,7 @@ for file in $version_files; do
             folder_to_keep=$(basename "$FOLDER_TO_KEEP")
             if [ "$folder_name" != "$folder_to_keep" ]; then
                 tag_name="$current_version"
-                # rm -rf "$folder"
+                rm -rf "$folder"
                 echo "will delete  $folder"
             fi
         done
