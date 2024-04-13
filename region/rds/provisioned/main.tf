@@ -46,27 +46,15 @@
 #     Name = "${local.identifier}-parameter-group"
 #   })
 # }
-
 resource "aws_db_instance" "this" {
-  allocated_storage           = 50
-  auto_minor_version_upgrade  = false                         # Custom for Oracle does not support minor version upgrades
-  custom_iam_instance_profile = "AWSRDSCustomInstanceProfile" # Instance profile is required for Custom for Oracle. See: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/custom-setup-orcl.html#custom-setup-orcl.iam-vpc
-  backup_retention_period     = 7
-  db_subnet_group_name        = local.db_subnet_group_name
-  engine                      = data.aws_rds_orderable_db_instance.custom-oracle.engine
-  engine_version              = data.aws_rds_orderable_db_instance.custom-oracle.engine_version
-  identifier                  = "ee-instance-demo"
-  instance_class              = data.aws_rds_orderable_db_instance.custom-oracle.instance_class
-  kms_key_id                  = data.aws_kms_key.by_id.arn
-  license_model               = data.aws_rds_orderable_db_instance.custom-oracle.license_model
-  multi_az                    = false # Custom for Oracle does not support multi-az
-  password                    = "avoid-plaintext-passwords"
-  username                    = "test"
-  storage_encrypted           = true
-
-  timeouts {
-    create = "3h"
-    delete = "3h"
-    update = "3h"
-  }
+  allocated_storage    = 10
+  db_name              = "mydb"
+  engine               = "mysql"
+  engine_version       = "5.7"
+  instance_class       = "db.t3.micro"
+  username             = "foo"
+  password             = "foobarbaz"
+  parameter_group_name = "default.mysql5.7"
+  skip_final_snapshot  = true
+}
 }
