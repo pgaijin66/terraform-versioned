@@ -29,7 +29,6 @@ FOLDER_TO_KEEP="$folder_name"
 
 # Compare versions
 if [ "$main_version" != "$current_version" ]; then
-    echo "Version has changed in folder $folder_name from $main_version to $current_version"
     # tag_name="$current_version"
     # git tag "$tag_name" && git push origin "$tag_name"
     for folder in $folders; do
@@ -39,12 +38,14 @@ if [ "$main_version" != "$current_version" ]; then
             tag_name="$current_version"
             git checkout -b intermediate-branch
             rm -rf "$folder"
-            git add .
-            git commit -m "Publishing module: $folder_name"
-            git tag "$tag_name" && git push origin "$tag_name"
-            git checkout -
         fi
     done
+
+    git add .
+    git commit -m "Publishing module: $folder_name from $main_version to $current_version"
+    git tag "$tag_name" && git push origin "$tag_name"
+    git checkout -
+
 else
     echo "Version is unchanged in folder $folder_name ($main_version)"
 fi
