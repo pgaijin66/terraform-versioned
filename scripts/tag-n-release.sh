@@ -105,8 +105,13 @@ for file in $version_files; do
 
     folder_path=$(dirname "$(dirname "$(dirname "$file")")")
 
+    # echo $fp
+    NEW_PATH=$(echo "$fp" | sed 's/\//-/g')
 
     if [ "$main_branch_version" != "$current_version" ]; then
+        # fp_name=$(basename "$fp") 
+        tag_name="$NEW_PATH-$current_version"
+
         git checkout -d intermediate-branch
         git checkout -b intermediate-branch
         # tag_name="$current_version"
@@ -114,21 +119,21 @@ for file in $version_files; do
         FOLDER_TO_KEEP="./$fp"
         for folder in $folders; do
             folder_name=$(basename "$folder") 
-            echo $folder
+            # echo $folder
             folder_to_keep=$(basename "$FOLDER_TO_KEEP")
             if [ "$folder_name" != "$folder_to_keep" ]; then
-                tag_name="$folder_name-$current_version"
-                # rm -rf "$folder"
-                echo "will delete  $folder"
+                rm -rf "$folder"
+                # echo "will delete  $folder"
+                # :
             fi
         done
-        echo "./$fp"
+        # echo "./$fp"
         # echo "Folder path: $folder_path"
 
-        echo "Publishing module: $folder_name from $main_branch_version to $current_version"
+        echo "Publishing module: $NEW_PATH from $main_branch_version to $current_version. Tag: $tag_name"
 
         git add .
-        git commit -m "Publishing module: $folder_name from $main_version to $current_version"
+        git commit -m "Publishing module: $NEW_PATH from $main_branch_version to $current_version. Tag: $tag_name"
         git tag "$tag_name" && git push origin "$tag_name"
         git checkout -
         git branch -d intermediate-branch
