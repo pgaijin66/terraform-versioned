@@ -133,7 +133,10 @@ for file in $version_files; do
         # echo "Folder path: $folder_path"
 
         echo "Publishing module: $NEW_PATH from $main_branch_version to $current_version. Tag: $tag_name"
-
+        git --version
+        git config user.name "Prabesh Thapa"
+        git config user.email "sthapaprabesh2020@gmail.com"
+        git remote set-url --push origin https://pgaijin66:$GITHUB_TOKEN@github.com/your/repo
         git add . 
         git commit -m "Publishing module: $NEW_PATH from $main_branch_version to $current_version. Tag: $tag_name" >/dev/null 2>&1
         git tag "$tag_name" && git push origin "$tag_name"

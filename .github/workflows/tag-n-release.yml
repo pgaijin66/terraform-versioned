@@ -16,17 +16,20 @@ jobs:
     steps:
       - name: Check out the repository to the runner
         uses: actions/checkout@v4
-      - name: git
-        run: |
-          # setup the username and email. I tend to use 'GitHub Actions Bot' with no email by default
-          git --version
-          git config user.name "Capsule GH Terraform Tagging Bot"
-          git config user.email "<>"
-          git status
+      # - name: git
+      #   run: |
+      #     # setup the username and email. I tend to use 'GitHub Actions Bot' with no email by default
+      #     git --version
+      #     git config user.name "Prabesh Thapa"
+      #     git config user.email "sthapaprabesh2020@gmail.com"
+      #     git remote set-url --push origin https://your_username:$GITHUB_TOKEN@github.com/your/repo
       - name: Make the script files executable
         run: chmod +x scripts/tag-n-release.sh
       - name: Run the scripts
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: bash scripts/tag-n-release.sh
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
 
