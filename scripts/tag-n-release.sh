@@ -54,7 +54,7 @@ REVISION_HASH="HEAD~1"
 
 # Find all version.yaml files
 version_files=$(find "$START_DIR" -type f -name "version.yaml")
-folders=$(find "$START_DIR" -mindepth 1 -maxdepth 3 -type d | grep -v "./.git")
+folders=$(find "$START_DIR" -mindepth 2 -maxdepth 3 -type d | grep -v "./.git")
 
 # # Define the URL of the version.yaml file in the main branch
 
