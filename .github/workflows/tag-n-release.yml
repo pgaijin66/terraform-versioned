@@ -28,8 +28,6 @@ jobs:
       - name: Make the script files executable
         run: chmod +x scripts/tag-n-release.sh
       - name: Run the scripts
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: bash scripts/tag-n-release.sh
       - name: Push Git Tag
         run: |
