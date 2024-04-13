@@ -80,6 +80,24 @@ function get_main_branch_version(){
 # Print the paths of all version.yaml files
 
 
+get_parent_folder() {
+    # Get the parent folder
+    parent_folder=$(dirname "$1")
+    echo "$parent_folder"
+}
+
+is_child_directory() {
+    parent_dir="$1"
+    child_dir="$2"
+
+    # Get the absolute paths of both directories
+    parent_dir=$(realpath "$parent_dir")
+    child_dir=$(realpath "$child_dir")
+
+    # Check if the child directory is a subdirectory of the parent directory
+    [[ "$child_dir" == "$parent_dir"* ]]
+}
+
 for file in $version_files; do
 
 
@@ -119,13 +137,21 @@ for file in $version_files; do
         # tag_name="$current_version"
         # git tag "$tag_name" && git push origin "$tag_name"
         FOLDER_TO_KEEP="./$fp"
+        parent_dir=$(get_parent_folder "$folder_path")
+        echo "Parent folder: $parent_folder"
+        echo "Parent folder: $parent_folder"
         for folder in $folders; do
             folder_name=$(basename "$folder") 
             # echo $folder
             folder_to_keep=$(basename "$FOLDER_TO_KEEP")
             if [ "$folder_name" != "$folder_to_keep" ]; then
-                rm -rf "$folder"
-                echo "will delete  $folder"
+                if is_child_directory "$parent_dir" "$folder_to_keep"; then
+                    :
+                else
+                    rm -rf "$folder"
+                    echo "will delete  $folder"
+                fi 
+
                 # :
             fi
         done
