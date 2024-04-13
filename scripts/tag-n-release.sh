@@ -135,7 +135,7 @@ for file in $version_files; do
         git add .
         git commit -m "Publishing module: $NEW_PATH from $main_branch_version to $current_version. Tag: $tag_name"
         git tag "$tag_name" && git push origin "$tag_name"
-        git checkout -
+        git switch -
         git branch -d intermediate-branch
 
     else
