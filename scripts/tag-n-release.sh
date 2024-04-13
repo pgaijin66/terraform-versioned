@@ -112,7 +112,7 @@ for file in $version_files; do
         # fp_name=$(basename "$fp") 
         tag_name="$NEW_PATH-$current_version"
 
-        git checkout -D intermediate-branch
+        git branch -D intermediate-branch
         git checkout -b intermediate-branch
         # tag_name="$current_version"
         # git tag "$tag_name" && git push origin "$tag_name"
