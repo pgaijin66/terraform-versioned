@@ -1,0 +1,30 @@
+name: "Tag and Release terraform module"
+on:
+    push:
+      branches:
+        - main
+        - master
+  
+permissions: {}
+  
+jobs:
+  example-job:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./scripts
+    steps:
+      - name: Check out the repository to the runner
+        uses: actions/checkout@v4
+      - name: git
+        run: |
+          # setup the username and email. I tend to use 'GitHub Actions Bot' with no email by default
+          git --version
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+          git status
+      - name: Make the script files executable
+        run: chmod +x scripts/tag-n-release.sh
+      - name: Run the scripts
+        run: |
+          bash scripts/tag-n-release.sh
