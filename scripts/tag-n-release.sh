@@ -53,7 +53,7 @@ START_DIR="."
 
 # Find all version.yaml files
 version_files=$(find "$START_DIR" -type f -name "version.yaml")
-folders=$(find "$START_DIR" -mindepth 1 -maxdepth 3 -type d ! -path ./.git)
+folders=$(find "$START_DIR" -mindepth 1 -maxdepth 3 -type d | grep -v "./.git")
 
 # # Define the URL of the version.yaml file in the main branch
 
@@ -107,8 +107,8 @@ for file in $version_files; do
 
 
     if [ "$main_branch_version" != "$current_version" ]; then
-        git checkout -d intermediate-branch
-        git checkout -b intermediate-branch
+        # git checkout -d intermediate-branch
+        # git checkout -b intermediate-branch
         # tag_name="$current_version"
         # git tag "$tag_name" && git push origin "$tag_name"
         FOLDER_TO_KEEP="./$fp"
@@ -118,20 +118,20 @@ for file in $version_files; do
             folder_to_keep=$(basename "$FOLDER_TO_KEEP")
             if [ "$folder_name" != "$folder_to_keep" ]; then
                 tag_name="$current_version"
-                rm -rf "$folder"
-                # echo "will delete  $folder"
+                # rm -rf "$folder"
+                echo "will delete  $folder"
             fi
         done
-        # echo "./$fp"
-        # echo "Folder path: $folder_path"
+        echo "./$fp"
+        echo "Folder path: $folder_path"
 
         echo "Publishing module: $folder_name from $main_branch_version to $current_version"
 
-        git add .
-        git commit -m "Publishing module: $folder_name from $main_version to $current_version"
-        git tag "$tag_name" && git push origin "$tag_name"
-        git checkout -
-        git branch -d intermediate-branch
+        # git add .
+        # git commit -m "Publishing module: $folder_name from $main_version to $current_version"
+        # git tag "$tag_name" && git push origin "$tag_name"
+        # git checkout -
+        # git branch -d intermediate-branch
 
     else
         echo "Version not changed. Nothing to do. Skipping..."
