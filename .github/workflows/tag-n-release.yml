@@ -20,11 +20,11 @@ jobs:
         run: |
           # setup the username and email. I tend to use 'GitHub Actions Bot' with no email by default
           git --version
-          git config user.name "GitHub Actions Bot"
+          git config user.name "Capsule GH Terraform Tagging Bot"
           git config user.email "<>"
           git status
       - name: Make the script files executable
-        run: chmod +x scripts/tag-n-release.sh
+        run: chmod +x tag-n-release.sh
       - name: Run the scripts
         run: |
-          bash scripts/tag-n-release.sh
+          bash tag-n-release.sh
