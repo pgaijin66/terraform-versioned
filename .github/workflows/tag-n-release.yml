@@ -17,7 +17,7 @@ jobs:
       - name: Check out the repository to the runner
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       # - name: git
       #   run: |
       #     # setup the username and email. I tend to use 'GitHub Actions Bot' with no email by default
