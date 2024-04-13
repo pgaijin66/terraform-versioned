@@ -10,9 +10,9 @@ permissions: {}
 jobs:
   example-job:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./scripts
+    # defaults:
+    #   run:
+    #     working-directory: ./scripts
     steps:
       - name: Check out the repository to the runner
         uses: actions/checkout@v4
@@ -24,7 +24,6 @@ jobs:
           git config user.email "<>"
           git status
       - name: Make the script files executable
-        run: chmod +x tag-n-release.sh
+        run: chmod +x scripts/tag-n-release.sh
       - name: Run the scripts
-        run: |
-          ./tag-n-release.sh
+        run: bash scripts/tag-n-release.sh
