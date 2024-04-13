@@ -112,7 +112,7 @@ for file in $version_files; do
         # fp_name=$(basename "$fp") 
         tag_name="$NEW_PATH-$current_version"
 
-        git branch -D intermediate-branch
+        git branch -D intermediate-branch >/dev/null 2>&1l
         git checkout -b intermediate-branch
         # tag_name="$current_version"
         # git tag "$tag_name" && git push origin "$tag_name"
@@ -132,12 +132,11 @@ for file in $version_files; do
 
         echo "Publishing module: $NEW_PATH from $main_branch_version to $current_version. Tag: $tag_name"
 
-        git add .
-        git commit -m "Publishing module: $NEW_PATH from $main_branch_version to $current_version. Tag: $tag_name"
+        git add . 
+        git commit -m "Publishing module: $NEW_PATH from $main_branch_version to $current_version. Tag: $tag_name" >/dev/null 2>&1
         git tag "$tag_name" && git push origin "$tag_name"
         git switch -
-        git branch -D intermediate-branch
-
+        git branch -D intermediate-branch >/dev/null 2>&1
     else
         echo "Version not changed. Nothing to do. Skipping..."
     fi
