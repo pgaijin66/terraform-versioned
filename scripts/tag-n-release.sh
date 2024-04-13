@@ -50,6 +50,7 @@
 
 # Define the directory to start the search from
 START_DIR="."
+REVISION_HASH="HEAD~1" 
 
 # Find all version.yaml files
 version_files=$(find "$START_DIR" -type f -name "version.yaml")
@@ -59,7 +60,7 @@ folders=$(find "$START_DIR" -mindepth 1 -maxdepth 3 -type d | grep -v "./.git")
 
 function get_main_branch_version(){
     path_to_version_file=$1
-    MAIN_BRANCH_VERSION_FILE="https://raw.githubusercontent.com/pgaijin66/terraform-versioned/main"
+    MAIN_BRANCH_VERSION_FILE="https://raw.githubusercontent.com/pgaijin66/terraform-versioned/$REVISION_HASH"
     echo "$MAIN_BRANCH_VERSION_FILE/$path_to_version_file"
     curl -s "$MAIN_BRANCH_VERSION_FILE/$path_to_version_file"
 
