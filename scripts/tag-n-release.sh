@@ -124,9 +124,9 @@ for file in $version_files; do
             # echo $folder
             folder_to_keep=$(basename "$FOLDER_TO_KEEP")
             if [ "$folder_name" != "$folder_to_keep" ]; then
-                rm -rf "$folder"
+                # rm -rf "$folder"
                 # echo "will delete  $folder"
-                # :
+                :
             fi
         done
         # echo "./$fp"
