@@ -125,7 +125,7 @@ for file in $version_files; do
         # echo "./$fp"
         # echo "Folder path: $folder_path"
 
-        # echo "will delete  ./$fp"
+        echo "Publishing module: $folder_name from $main_branch_version to $current_version"
 
         git add .
         git commit -m "Publishing module: $folder_name from $main_version to $current_version"
@@ -133,6 +133,8 @@ for file in $version_files; do
         git checkout -
         git branch -d intermediate-branch
 
+    else
+        echo "Version not changed. Nothing to do. Skipping..."
     fi
 done
 
