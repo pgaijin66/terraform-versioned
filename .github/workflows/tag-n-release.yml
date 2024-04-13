@@ -18,20 +18,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      # - name: git
-      #   run: |
-      #     # setup the username and email. I tend to use 'GitHub Actions Bot' with no email by default
-      #     git --version
-      #     git config user.name "Prabesh Thapa"
-      #     git config user.email "sthapaprabesh2020@gmail.com"
-      #     git remote set-url --push origin https://your_username:$GITHUB_TOKEN@github.com/your/repo
       - name: Make the script files executable
         run: chmod +x scripts/tag-n-release.sh
       - name: Run the scripts
         run: bash scripts/tag-n-release.sh
-      - name: Push Git Tag
-        run: |
-          git config user.name "GitHub Actions"
-          git config user.email "github-actions@users.noreply.github.com"
-          git tag v1.1.1
-          git push origin v1.1.1
