@@ -117,7 +117,7 @@ for file in $version_files; do
             echo $folder
             folder_to_keep=$(basename "$FOLDER_TO_KEEP")
             if [ "$folder_name" != "$folder_to_keep" ]; then
-                tag_name="$current_version"
+                tag_name="$folder_name-$current_version"
                 # rm -rf "$folder"
                 echo "will delete  $folder"
             fi
@@ -127,11 +127,11 @@ for file in $version_files; do
 
         echo "Publishing module: $folder_name from $main_branch_version to $current_version"
 
-        # git add .
-        # git commit -m "Publishing module: $folder_name from $main_version to $current_version"
-        # git tag "$tag_name" && git push origin "$tag_name"
-        # git checkout -
-        # git branch -d intermediate-branch
+        git add .
+        git commit -m "Publishing module: $folder_name from $main_version to $current_version"
+        git tag "$tag_name" && git push origin "$tag_name"
+        git checkout -
+        git branch -d intermediate-branch
 
     else
         echo "Version not changed. Nothing to do. Skipping..."
