@@ -87,7 +87,7 @@ for file in $version_files; do
     declare main_branch_version
 
     file="${file#./}"
-    echo $file
+    # echo $file
 
     # rds=$(awk '/^rds:/ {print $2}' "$file" | tr -d '"')
     # provisioned=$(awk '/^provisioned:/ {print $2}' "$file" | tr -d '"')
