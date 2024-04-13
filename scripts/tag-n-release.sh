@@ -58,14 +58,13 @@ folders=$(find "$START_DIR" -mindepth 1 -maxdepth 3 -type d | grep -v "./.git")
 
 # # Define the URL of the version.yaml file in the main branch
 
-# function get_main_branch_version(){
-#     path_to_version_file=$1
-#     MAIN_BRANCH_VERSION_FILE="https://raw.githubusercontent.com/pgaijin66/terraform-versioned/$REVISION_HASH"
-#     $(git show HEAD^:"$FILE_PATH")
-#     echo "$MAIN_BRANCH_VERSION_FILE/$path_to_version_file"
-#     curl -s "$MAIN_BRANCH_VERSION_FILE/$path_to_version_file"
-
-# }
+function get_main_branch_version(){
+    path_to_version_file=$1
+    MAIN_BRANCH_VERSION_FILE="https://raw.githubusercontent.com/pgaijin66/terraform-versioned/$REVISION_HASH"
+    $(git show HEAD^:"$FILE_PATH")
+    echo "$MAIN_BRANCH_VERSION_FILE/$path_to_version_file"
+    curl -s "$MAIN_BRANCH_VERSION_FILE/$path_to_version_file"
+}
 # MAIN_BRANCH_VERSION_FILE="https://raw.githubusercontent.com/pgaijin66/terraform-versioned/main/modules/rds/version.yaml"
 
 # # Define the path to the version.yaml file in the current branch
@@ -100,9 +99,9 @@ for file in $version_files; do
     current_branch_content=$(<"$file")
 
     current_version=$(echo "$current_branch_content" | awk '/^version:/ {print $2}' | tr -d '"')
-    # main_branch_version=$(get_main_branch_version "$file" | awk '/^version:/ {print $2}' | tr -d '"')
+    main_branch_version=$(get_main_branch_version "$file" | awk '/^version:/ {print $2}' | tr -d '"')
 
-    main_branch_version=$(git show HEAD^:"$file"| awk '/^version:/ {print $2}' | tr -d '"')
+    # main_branch_version=$(git show HEAD^:"$file"| awk '/^version:/ {print $2}' | tr -d '"')
 
     # echo $current_version
     # echo $main_branch_version
