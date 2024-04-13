@@ -65,7 +65,7 @@ folders=$(find "$START_DIR" -mindepth 1 -maxdepth 3 -type d | grep -v "./.git")
 #     echo "$MAIN_BRANCH_VERSION_FILE/$path_to_version_file"
 #     curl -s "$MAIN_BRANCH_VERSION_FILE/$path_to_version_file"
 
-}
+# }
 # MAIN_BRANCH_VERSION_FILE="https://raw.githubusercontent.com/pgaijin66/terraform-versioned/main/modules/rds/version.yaml"
 
 # # Define the path to the version.yaml file in the current branch
