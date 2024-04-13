@@ -139,7 +139,8 @@ for file in $version_files; do
         git remote set-url origin https://github.com/pgaijin66/terraform-versioned.git
         git add . 
         git commit -m "Publishing module: $NEW_PATH from $main_branch_version to $current_version. Tag: $tag_name" >/dev/null 2>&1
-        git tag "$tag_name" && git push origin "$tag_name"
+        git tag "$tag_name"
+        gh release create "$tag_name"
         git switch -
         git branch -D intermediate-branch 2>/dev/null 2>&1
     else
