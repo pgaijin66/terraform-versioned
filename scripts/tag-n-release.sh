@@ -54,7 +54,7 @@ REVISION_HASH="HEAD~1"
 
 # Find all version.yaml files
 version_files=$(find "$START_DIR" -type f -name "version.yaml")
-folders=$(find "$START_DIR" -mindepth 2 -maxdepth 3 -type d | grep -v "./.git")
+folders=$(find "$START_DIR" -mindepth 1 -maxdepth 3 -type d | grep -v "./.git")
 
 # # Define the URL of the version.yaml file in the main branch
 
@@ -133,9 +133,6 @@ for file in $version_files; do
         # echo "Folder path: $folder_path"
 
         echo "Publishing module: $NEW_PATH from $main_branch_version to $current_version. Tag: $tag_name"
-        git --version
-        git config user.name "GitHub Actions"
-        git config user.email "github-actions@users.noreply.github.com"
         git add . 
         git commit -m "Publishing module: $NEW_PATH from $main_branch_version to $current_version. Tag: $tag_name" >/dev/null 2>&1
         git tag "$tag_name" 
